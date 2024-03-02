@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="778.0" prefWidth="1280.0" style="-fx-background-color: #a3daff;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+    <VBox layoutY="-6.0" prefHeight="783.0" prefWidth="205.0" style="-fx-background-color: #2b90d9;">
+      <children>
+            <Pane prefHeight="230.0" prefWidth="205.0" style="-fx-background-color: #2b90d9;" />
+        <Button mnemonicParsing="false" prefHeight="93.0" prefWidth="205.0" stylesheets="@style.css" text="Lentelė" textFill="WHITE">
+               <font>
+                  <Font name="Z003-MediumItalic" size="31.0" />
+               </font></Button>
+            <Button layoutX="10.0" layoutY="269.0" mnemonicParsing="false" prefHeight="93.0" prefWidth="205.0" stylesheets="@style.css" text="Grafikas" textFill="WHITE">
+               <font>
+                  <Font name="Z003-MediumItalic" size="31.0" />
+               </font>
+            </Button>
+            <Button layoutX="10.0" layoutY="362.0" mnemonicParsing="false" prefHeight="93.0" prefWidth="205.0" stylesheets="@style.css" text="Išsaugoti" textFill="WHITE">
+               <font>
+                  <Font name="Z003-MediumItalic" size="31.0" />
+               </font>
+            </Button>
+      </children></VBox>
+      <Pane layoutX="227.0" prefHeight="236.0" prefWidth="1060.0">
+         <children>
+            <Text layoutX="32.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Paskolos suma" wrappingWidth="220.64892578125">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Text>
+            <TextField layoutX="32.0" layoutY="76.0" prefHeight="40.0" prefWidth="185.0" promptText="€  0">
+               <font>
+                  <Font size="21.0" />
+               </font></TextField>
+            <Text layoutX="302.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Palūkanos" wrappingWidth="205.0">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Text>
+            <TextField layoutX="302.0" layoutY="76.0" prefHeight="40.0" prefWidth="192.0" promptText="0 %">
+               <font>
+                  <Font size="21.0" />
+               </font></TextField>
+            <Text layoutX="564.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Terminas" wrappingWidth="220.64892578125">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Text>
+            <TextField layoutX="564.0" layoutY="76.0" prefHeight="41.0" prefWidth="185.0" promptText="0 mėn.">
+               <font>
+                  <Font size="21.0" />
+               </font></TextField>
+            <RadioButton layoutX="32.0" layoutY="162.0" mnemonicParsing="false" selected="true" text="Linijinis">
+               <font>
+                  <Font size="29.0" />
+               </font>
+               <toggleGroup>
+                  <ToggleGroup fx:id="REPAYMENT_OPTION" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton layoutX="253.0" layoutY="162.0" mnemonicParsing="false" text="Anuitetas" toggleGroup="$REPAYMENT_OPTION">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </RadioButton>
+            <Text layoutX="795.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Atidėjimas" wrappingWidth="205.0">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Text>
+            <TextField layoutX="795.0" layoutY="76.0" prefHeight="24.0" prefWidth="110.0" promptText="mėn.">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </TextField>
+            <TextField layoutX="917.0" layoutY="77.0" prefHeight="24.0" prefWidth="110.0" promptText="trukmė">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </TextField>
+         </children>
+      </Pane>
+      <GridPane layoutX="239.0" layoutY="249.0" prefHeight="526.0" prefWidth="1008.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="225.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="480.0" minHeight="10.0" prefHeight="478.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <HBox prefHeight="41.0" prefWidth="1075.0">
+               <children>
+                  <Pane prefHeight="41.0" prefWidth="51.0">
+                     <children>
+                        <Text layoutX="71.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </Pane>
+                  <TextField prefHeight="41.0" prefWidth="111.0" promptText="Nuo">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </TextField>
+                  <Pane layoutX="10.0" layoutY="10.0" prefHeight="41.0" prefWidth="37.0" />
+                  <TextField layoutX="210.0" layoutY="10.0" prefHeight="41.0" prefWidth="110.0" promptText="Iki">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+            <TableView prefHeight="448.0" prefWidth="1008.0" GridPane.rowIndex="1">
+              <columns>
+                <TableColumn prefWidth="110.0" text="Nr." />
+                <TableColumn prefWidth="210.0" text="Paskolos likutis" />
+                  <TableColumn minWidth="0.0" prefWidth="180.0" text="Palūkanos" />
+                  <TableColumn prefWidth="240.0" text="Kredito grąžinimas" />
+                  <TableColumn prefWidth="270.0" text="Mėn. įmoka" />
+              </columns>
+            </TableView>
+         </children>
+      </GridPane>
+  </children>
+</AnchorPane>
