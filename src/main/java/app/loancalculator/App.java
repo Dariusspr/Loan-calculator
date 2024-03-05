@@ -1,3 +1,7 @@
+/*
+    Darius Spruogis PS 5 gr.
+ */
+
 package app.loancalculator;
 
 import javafx.application.Application;
