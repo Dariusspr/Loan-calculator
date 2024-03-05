@@ -6,22 +6,31 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
+import java.io.File;
 
 import static app.loancalculator.calculations.CalculatePayments.getMonthList;
+import static app.loancalculator.utils.Export.exportToCSV;
+import static app.loancalculator.utils.Filter.getFilteredMonths;
+import static app.loancalculator.utils.Graph.getGraphData;
 
 
 public class AppController {
 
-    private boolean annuity; // if false, linear payment
+    private boolean annuity; // If false, linear payment
     private int amount, termY, termM, postStart, postTerm, fromFilter, toFilter;
     private float interest, postInterest;
     private boolean validInput;
-    private ObservableList<Month> monthList = FXCollections.observableArrayList();;
+    private ObservableList<Month> monthList;
+    private  ObservableList<Month> filteredMonths = FXCollections.observableArrayList();
+    private Stage stage;
 
     @FXML
     private Button btnTable;
@@ -36,9 +45,7 @@ public class AppController {
     @FXML
     private GridPane gridPaneTableGraph;
     @FXML
-    private GridPane gridPaneSave;
-    @FXML
-    private LineChart lineChartGraph;
+    private LineChart<Number, Number> lineChartGraph;
     @FXML
     private TableView<Month> tableViewData;
     @FXML
@@ -78,46 +85,34 @@ public class AppController {
     private RadioButton radioButtonLinear;
     @FXML
     private RadioButton radioButtonAnnuity;
-
-
     @FXML
-    private void checkInput(KeyEvent e) {
-        // TODO: fix backspace
-        if (!e.getCharacter().matches("\\d*")) {
-            TextField textField = (TextField) e.getSource();
-            String currentText = textField.getText();
-            int caretPosition = textField.getCaretPosition();
-            if (caretPosition > 0) {
-                String newText = currentText.substring(0, caretPosition - 1) + currentText.substring(caretPosition);
-                textField.setText(newText);
-                textField.positionCaret(caretPosition - 1); // Set the caret position back by one
-            }
+    private NumberAxis axisX;
+    @FXML
+    private NumberAxis axisY;
 
-        }
-    }
     @FXML
     private void handleClicks(ActionEvent e) {
         Object src = e.getSource();
         if (src == btnTable) {
             gridPaneTableGraph.setVisible(true);
-            gridPaneSave.setVisible(false);
             tableViewData.setVisible(true);
             lineChartGraph.setVisible(false);
-            tableViewData.toFront();
 
         } else if (src == btnGraph) {
             gridPaneTableGraph.setVisible(true);
             tableViewData.setVisible(false);
             lineChartGraph.setVisible(true);
-            lineChartGraph.toFront();
 
         } else if (src == btnSave) {
-            gridPaneSave.setVisible(true);
             gridPaneTableGraph.setVisible(false);
+
+            exportToCSV(getFileName(), monthList);
+
         } else if (src == btnCalculate) {
             getDataInput();
             if (!validInput) {
                 textInputErr.setVisible(true);
+
             } else {
                 textInputErr.setVisible(false);
                 monthList = getMonthList(amount, interest, termY, termM, postStart, postTerm, postInterest, annuity);
@@ -129,14 +124,22 @@ public class AppController {
             getFilterInput();
             if (!validInput) {
                 textFilterErr.setVisible(true);
+
             } else {
                 textFilterErr.setVisible(false);
+                filteredMonths = getFilteredMonths(monthList, fromFilter, toFilter);
+                showTable();
+                showGraph();
             }
 
         }
     }
 
     private void showGraph() {
+        axisX.setAutoRanging(true);
+        axisY.setAutoRanging(true);
+        lineChartGraph.getData().clear();
+        lineChartGraph.getData().add(getGraphData(filteredMonths.isEmpty() ? monthList : filteredMonths));
 
     }
 
@@ -164,7 +167,11 @@ public class AppController {
             return;
         }
 
-        if (fromFilter < 0 || fromFilter > termY * 12 + termM || toFilter < 0 || toFilter > termY * 12 + termM) {
+        if (fromFilter < 0 || fromFilter > termY * 12 + termM + postTerm || toFilter < 0 || toFilter > termY * 12 + termM + postTerm) {
+            validInput = false;
+            return;
+        }
+        if (fromFilter > toFilter && toFilter != 0) {
             validInput = false;
         }
 
@@ -241,19 +248,26 @@ public class AppController {
             annuity = false;
         }
 
-        if ((postStart == 0 || postTerm == 0 || postInterest == 0) && postStart != postTerm && postInterest != postTerm) {
+        if ((postStart == 0 || postTerm == 0 || postInterest == 0) && (postInterest != 0 || postTerm != 0 || postStart != 0)) {
             validInput = false;
             return;
         }
 
-        if (amount <= 0 || termY < 0 || termM < 0 || postStart <= 0 || postTerm < 0 || interest <= 0 || postInterest < 0) {
+        if (amount <= 0 || termY < 0 || termM < 0 || postStart < 0 || postTerm < 0 || interest <= 0 || postInterest < 0) {
             validInput = false;
             return;
         }
 
-        if (termY * 12 + termM < postStart || termY * 12 + termM  < postStart + postTerm - 1) {
+        if (termY * 12 + termM <= postStart || termY * 12 + termM  <= postStart + postTerm - 1) {
             validInput = false;
         }
+    }
+
+    private String getFileName() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Export file");
+        File file = fileChooser.showSaveDialog(stage);
+        return file.getAbsolutePath();
     }
 
     private void showTable() {
@@ -262,6 +276,11 @@ public class AppController {
         interestCol.setCellValueFactory(new PropertyValueFactory<>("InterestPayment"));
         returnCol.setCellValueFactory(new PropertyValueFactory<>("CreditRepayment"));
         fullPaymentCol.setCellValueFactory(new PropertyValueFactory<>("FullPayment"));
-        tableViewData.setItems(monthList);
+        tableViewData.setItems(filteredMonths.isEmpty() ? monthList : filteredMonths);
     }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
 }

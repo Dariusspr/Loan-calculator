@@ -103,91 +103,80 @@
             </TextField>
          </children>
       </Pane>
-      <StackPane layoutX="239.0" layoutY="246.849609375">
+      <GridPane fx:id="gridPaneTableGraph" layoutX="239.0" layoutY="246.849609375" prefHeight="526.0" prefWidth="1008.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="225.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="480.0" minHeight="10.0" prefHeight="478.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <GridPane fx:id="gridPaneSave" layoutX="10.0" layoutY="10.0" prefHeight="503.0" prefWidth="1008.0">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints maxHeight="480.0" minHeight="10.0" prefHeight="478.0" vgrow="SOMETIMES" />
-               </rowConstraints>
+            <HBox prefHeight="41.0" prefWidth="1075.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Save screen" wrappingWidth="421.5107421875" />
-               </children>
-            </GridPane>
-            <GridPane fx:id="gridPaneTableGraph" prefHeight="526.0" prefWidth="1008.0">
-              <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="225.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="480.0" minHeight="10.0" prefHeight="478.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <HBox prefHeight="41.0" prefWidth="1075.0">
+                  <Pane prefHeight="41.0" prefWidth="51.0">
                      <children>
-                        <Pane prefHeight="41.0" prefWidth="51.0">
-                           <children>
-                              <Text layoutX="71.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0">
-                                 <font>
-                                    <Font size="28.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </Pane>
-                        <TextField fx:id="textFieldFrom" prefHeight="41.0" prefWidth="111.0" promptText="Nuo">
+                        <Text layoutX="71.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0">
                            <font>
-                              <Font size="18.0" />
-                           </font>
-                        </TextField>
-                        <Pane layoutX="10.0" layoutY="10.0" prefHeight="41.0" prefWidth="37.0" />
-                        <TextField fx:id="textFieldTo" layoutX="210.0" layoutY="10.0" prefHeight="41.0" prefWidth="110.0" promptText="Iki">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </TextField>
-                        <Pane layoutX="10.0" layoutY="10.0" prefHeight="41.0" prefWidth="51.0">
-                           <children>
-                              <Text layoutX="71.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0">
-                                 <font>
-                                    <Font size="28.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </Pane>
-                        <Button fx:id="btnUpdateFilter" mnemonicParsing="false" onAction="#handleClicks" prefHeight="38.0" prefWidth="90.0" stylesheets="@style.css" text="Rodyti" textFill="WHITE" />
-                        <Text fx:id="textFilterErr" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Neteisingas filtras" visible="false">
-                           <font>
-                              <Font size="23.0" />
+                              <Font size="28.0" />
                            </font>
                         </Text>
                      </children>
-                  </HBox>
-                  <StackPane fx:id="stackPaneTableGraph" GridPane.rowIndex="1">
+                  </Pane>
+                  <TextField fx:id="textFieldFrom" prefHeight="41.0" prefWidth="111.0" promptText="Nuo">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </TextField>
+                  <Pane layoutX="10.0" layoutY="10.0" prefHeight="41.0" prefWidth="37.0" />
+                  <TextField fx:id="textFieldTo" layoutX="210.0" layoutY="10.0" prefHeight="41.0" prefWidth="110.0" promptText="Iki">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </TextField>
+                  <Pane layoutX="10.0" layoutY="10.0" prefHeight="41.0" prefWidth="51.0">
                      <children>
-                        <LineChart fx:id="lineChartGraph" prefHeight="505.0" prefWidth="1059.0">
-                          <xAxis>
-                            <CategoryAxis side="BOTTOM" />
-                          </xAxis>
-                          <yAxis>
-                            <NumberAxis side="LEFT" />
-                          </yAxis>
-                        </LineChart>
-                        <TableView fx:id="tableViewData" prefHeight="448.0" prefWidth="1008.0">
-                          <columns>
-                            <TableColumn fx:id="indexCol" prefWidth="110.0" text="Nr." />
-                            <TableColumn fx:id="remainingCol" prefWidth="210.0" text="Paskolos likutis" />
-                              <TableColumn fx:id="interestCol" minWidth="0.0" prefWidth="180.0" text="Palūkanos" />
-                              <TableColumn fx:id="returnCol" prefWidth="240.0" text="Kredito grąžinimas" />
-                              <TableColumn fx:id="fullPaymentCol" prefWidth="270.0" text="Mėn. įmoka" />
-                          </columns>
-                        </TableView>
+                        <Text layoutX="71.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                        </Text>
                      </children>
-                  </StackPane>
+                  </Pane>
+                  <Button fx:id="btnUpdateFilter" mnemonicParsing="false" onAction="#handleClicks" prefHeight="38.0" prefWidth="90.0" stylesheets="@style.css" text="Rodyti" textFill="WHITE" />
+                  <Text fx:id="textFilterErr" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Neteisingas filtras" visible="false">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                  </Text>
                </children>
-            </GridPane>
+            </HBox>
+            <StackPane fx:id="stackPaneTableGraph" GridPane.rowIndex="1">
+               <children>
+                  <LineChart fx:id="lineChartGraph" disable="true" prefHeight="505.0" prefWidth="1059.0">
+                    <xAxis>
+                      <NumberAxis fx:id="axisX" label="Mėnesio numeris" minorTickLength="1.0" side="BOTTOM" tickLabelGap="5.0" tickLength="5.0" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis fx:id="axisY" label="Mėnesinė įmoka" prefHeight="405.0" prefWidth="80.0" side="LEFT" tickLabelGap="10.0" upperBound="1000.0">
+                           <tickLabelFont>
+                              <Font size="10.0" />
+                           </tickLabelFont>
+                        </NumberAxis>
+                    </yAxis>
+                  </LineChart>
+                  <TableView fx:id="tableViewData" prefHeight="448.0" prefWidth="1008.0">
+                    <columns>
+                      <TableColumn fx:id="indexCol" prefWidth="110.0" text="Nr." />
+                      <TableColumn fx:id="remainingCol" prefWidth="210.0" text="Paskolos likutis" />
+                        <TableColumn fx:id="interestCol" minWidth="0.0" prefWidth="180.0" text="Palūkanos" />
+                        <TableColumn fx:id="returnCol" prefWidth="240.0" text="Kredito grąžinimas" />
+                        <TableColumn fx:id="fullPaymentCol" prefWidth="270.0" text="Mėn. įmoka" />
+                    </columns>
+                  </TableView>
+               </children>
+            </StackPane>
          </children>
-      </StackPane>
+      </GridPane>
   </children>
 </AnchorPane>
