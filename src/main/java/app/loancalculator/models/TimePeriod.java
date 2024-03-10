@@ -7,6 +7,15 @@ abstract class TimePeriod {
     protected double creditRepayment;
     protected double fullPayment;
 
+
+    /**
+     * Object containing information about loan payment
+     * @param index month number
+     * @param remainingPayment
+     * @param interestPayment
+     * @param creditRepayment
+     * @param fullPayment
+     */
     protected TimePeriod(int index,double remainingPayment, double interestPayment, double creditRepayment, double fullPayment) {
         this.index = index;
         this.remainingPayment = remainingPayment;

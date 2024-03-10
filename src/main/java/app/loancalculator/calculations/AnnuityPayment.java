@@ -15,35 +15,37 @@ public class AnnuityPayment extends Payment{
     }
 
 
+
+    /**
+     * Overrides the calculateCredit method to calculate the credit portion of the annuity payment.
+     *
+     * @return The credit portion of the annuity payment.
+     */
     @Override
     protected double calculateCredit() {
         return monthlyPayment - monthInterest;
     }
 
 
+    /**
+     * Calculates the schedule of annuity payments
+     *
+     * @return list of month objects containing information(monthly credit repayment, monthly interest, full monthly payment) for each month.
+     */
     public ObservableList<Month> calculate() {
 
         ObservableList<Month> monthList = FXCollections.observableArrayList();
 
-        double currentAmount  = amount;
-        int numberOfPayments = termYears * paymentFrequency + termMonths - postTerm;
-        double monthlyInterestRate = interestRate / paymentFrequency / 100;
-        double monthlyPostInterestRate = postInterest / paymentFrequency / 100;
-
-
-        double monthlyPayment = amount * ((monthlyInterestRate * (Math.pow(1 + monthlyInterestRate, numberOfPayments))) /
-                ((Math.pow(1 + monthlyInterestRate, numberOfPayments)) - 1));
-
         for (int index = 1; index <= numberOfPayments + postTerm; index++) {
             // Postponement period
             if (index >= postStart && index < postStart + postTerm) {
-                monthInterest = currentAmount * monthlyPostInterestRate;
+                monthInterest = calculateInterest(postInterestOnce);
                 monthInterest = roundValue(monthInterest);
                 monthList.add(new Month(index, roundValue(currentAmount), monthInterest , 0, monthInterest));
                 continue;
             }
 
-            monthInterest = currentAmount * monthlyInterestRate;
+            monthInterest = calculateInterest();
             double credit = calculateCredit();
             monthList.add(new Month(index, roundValue(currentAmount), roundValue(monthInterest), roundValue(credit), roundValue(monthlyPayment)));
             currentAmount -= credit;

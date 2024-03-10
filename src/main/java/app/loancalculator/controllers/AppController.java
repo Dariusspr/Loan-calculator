@@ -90,6 +90,11 @@ public class AppController {
     @FXML
     private NumberAxis axisY;
 
+    /**
+     * Handles button clicks in the UI.
+     *
+     * @param e Button ActionEvent.
+     */
     @FXML
     private void handleClicks(ActionEvent e) {
         Object src = e.getSource();
@@ -104,9 +109,9 @@ public class AppController {
             lineChartGraph.setVisible(true);
 
         } else if (src == btnSave) {
-            gridPaneTableGraph.setVisible(false);
-
-            exportToCSV(getFileName(), monthList);
+            String file = getFileName();
+            if (!file.isEmpty())
+                exportToCSV(file, monthList);
 
         } else if (src == btnCalculate) {
             getDataInput();
@@ -143,6 +148,9 @@ public class AppController {
 
     }
 
+    /**
+     * Gets and validates the input - filter parameters.
+     */
     private void getFilterInput() {
         String fromRaw, toRaw;
 
@@ -177,6 +185,9 @@ public class AppController {
 
     }
 
+    /**
+     * Gets and validates the input - data about loan.
+     */
     private void getDataInput() {
         String amountRaw, interestRaw, termYRaw, termMRaw, postStartRaw, postTermRaw, postInterestRaw;
         amountRaw = textFieldAmount.getText();
@@ -263,13 +274,26 @@ public class AppController {
         }
     }
 
+    /**
+     * Get file name from file chooser.
+     *
+     * @return The absolute path of the selected file.
+     */
     private String getFileName() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Export file");
         File file = fileChooser.showSaveDialog(stage);
-        return file.getAbsolutePath();
+        if (file == null) {
+            return "";
+        }
+        else {
+            return file.getAbsolutePath();
+        }
     }
 
+    /**
+     * Puts data to dataview columns
+     */
     private void showTable() {
         indexCol.setCellValueFactory(new PropertyValueFactory<>("Index"));
         remainingCol.setCellValueFactory(new PropertyValueFactory<>("RemainingPayment"));
@@ -279,6 +303,10 @@ public class AppController {
         tableViewData.setItems(filteredMonths.isEmpty() ? monthList : filteredMonths);
     }
 
+    /**
+     * To have reference to stage in this class (for filechooser dialog)
+     * @param stage
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }

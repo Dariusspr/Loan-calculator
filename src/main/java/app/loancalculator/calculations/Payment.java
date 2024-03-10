@@ -3,6 +3,7 @@ package app.loancalculator.calculations;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+
 abstract class Payment {
     protected final int paymentFrequency = 12; // Every month
     private final int decimalPlaces = 2;
@@ -26,6 +27,12 @@ abstract class Payment {
         numberOfPayments = termMonths + termYears * paymentFrequency - postTerm;
     }
 
+    /**
+     * Rounds a given value to the specified number of decimal places.
+     *
+     * @param value The value to be rounded.
+     * @return The rounded value.
+     */
     protected double roundValue(double value) {
         BigDecimal roundedNumber = new BigDecimal(Double.toString(value));
         roundedNumber = roundedNumber.setScale(decimalPlaces, RoundingMode.HALF_UP);
@@ -33,12 +40,30 @@ abstract class Payment {
     }
 
 
+    /**
+     * Calculates the credit portion of the payment when credit repayments are of constant size.
+     *
+     * @return The credit portion of the payment.
+     */
     protected double calculateCredit() {
         return currentAmount / numberOfPayments;
     }
 
-    protected double calculatePostInterest() {
-        return currentAmount * postInterestOnce;
+    /**
+     * Calculates the interest portion of the payment based on 'interestOnce'.
+     *
+     * @return The interest portion of the payment.
+     */
+    protected double calculateInterest() {
+        return currentAmount * interestOnce;
+    }
+    /**
+     * Calculates the interest portion of the payment based on given interest.
+     *
+     * @return The interest portion of the payment.
+     */
+    protected double calculateInterest(double interest) {
+        return currentAmount * interest;
     }
 }
 

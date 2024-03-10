@@ -10,6 +10,11 @@ public class LinearPayment extends  Payment{
     }
 
 
+    /**
+     * Calculates the schedule of linear payments
+     *
+     * @return list of month objects containing information(monthly credit repayment, monthly interest, full monthly payment) for each month.
+     */
     public ObservableList<Month> calculate() {
         ObservableList<Month> monthList = FXCollections.observableArrayList();
 
@@ -18,12 +23,12 @@ public class LinearPayment extends  Payment{
         for (int index = 1; index <= numberOfPayments + postTerm; index++) {
             // Postponement period
             if (index >= postStart && index < postStart + postTerm) {
-                double interest = roundValue(calculatePostInterest());
+                double interest = roundValue(calculateInterest(postInterestOnce));
                 monthList.add(new Month(index, roundValue(currentAmount), interest , 0, interest));
                 continue;
             }
 
-            double interest = currentAmount * interestOnce;
+            double interest = calculateInterest();
             monthList.add(new Month(index, roundValue(currentAmount), roundValue(interest), roundValue(monthlyCreditRepayment), roundValue(monthlyCreditRepayment + interest)));
             currentAmount -= monthlyCreditRepayment;
         }

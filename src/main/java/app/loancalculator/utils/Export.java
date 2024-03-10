@@ -7,6 +7,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Export {
+
+    /**
+     * Exports data from a list of months to a CSV file.
+     *
+     * @param fileName The name of the CSV file to export to.
+     * @param monthList The list of months containing the data to export.
+     */
     public static void exportToCSV(String fileName, ObservableList<Month> monthList) {
         try (FileWriter writer = new FileWriter(fileName)) {
             writer.append("Nr,Paskolos likutis,Palūkanos,Kredito grąžinimas,Mėn. įmoka\n");
